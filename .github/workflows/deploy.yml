@@ -1,22 +1,38 @@
-name: Production Deploy
+name: Deploy to Netlify
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    environment: production # Uses prod secrets if set
+    environment: production
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
+          cache: "npm"
+
       - run: npm ci
+
       - name: Build with secrets
         env:
           VITE_GITHUB_URL: ${{ secrets.VITE_GITHUB_URL }}
           VITE_TOKEN: ${{ secrets.VITE_TOKEN }}
         run: npm run build
-      # Add deploy step, e.g., to Vercel/Netlify
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3
+        with:
+          publish-dir: "./dist" # Vite outputs to dist, not build
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-build: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
