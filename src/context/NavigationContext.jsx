@@ -2,9 +2,6 @@ import { createContext, useState } from "react";
 
 const NavigationContext = createContext();
 
-const gitUrl = ;
-const gitToken = ;
-
 export const NavigationProvider = ({ children }) => {
   // ALL STATES AND APP LEVEL FUNCTIONS
   const [loading, setLoading] = useState(false);
@@ -52,9 +49,12 @@ export const NavigationProvider = ({ children }) => {
   const requestUserProfile = async (login) => {
     try {
       setLoading(true);
-      const response = await fetch(`${import.meta.env.VITE_GITHUB_URL}/users/${login}`, {
-        apiHeaders,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_GITHUB_URL}/users/${login}`,
+        {
+          apiHeaders,
+        }
+      );
 
       if (!response.ok) {
         throw new Err(`HTTP ${response.status}: ${response.statusText}`);
@@ -75,7 +75,9 @@ export const NavigationProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${import.meta.env.VITE_GITHUB_URL}/users/${login}/repos?direction=desc&per_page=10`,
+        `${
+          import.meta.env.VITE_GITHUB_URL
+        }/users/${login}/repos?direction=desc&per_page=10`,
         {
           apiHeaders,
         }
