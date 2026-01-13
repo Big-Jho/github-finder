@@ -26,7 +26,7 @@ export const NavigationProvider = ({ children }) => {
       setLoading(true);
 
       const response = await fetch(
-        `${gitUrl}/search/users?q=${query}&per_page=10`,
+        `https://api.github.com/search/users?q=${query}&per_page=10`,
         {
           apiHeaders,
         }
@@ -51,7 +51,7 @@ export const NavigationProvider = ({ children }) => {
   const requestUserProfile = async (login) => {
     try {
       setLoading(true);
-      const response = await fetch(`${gitUrl}/users/${login}`, {
+      const response = await fetch(`https://api.github.com/users/${login}`, {
         apiHeaders,
       });
 
@@ -74,7 +74,7 @@ export const NavigationProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${gitUrl}/users/${login}/repos?direction=desc&per_page=10`,
+        `https://api.github.com/users/${login}/repos?direction=desc&per_page=10`,
         {
           apiHeaders,
         }
