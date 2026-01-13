@@ -12,7 +12,7 @@ export const NavigationProvider = ({ children }) => {
 
   const apiHeaders = {
     headers: {
-      Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+      Authorization: `token ${import.meta.env.GITHUB_TOKEN}`,
       Accept: "application/vnd.github+json",
       "User-Agent": "Big-Jho",
     },
@@ -24,9 +24,7 @@ export const NavigationProvider = ({ children }) => {
       setLoading(true);
 
       const response = await fetch(
-        `${
-          import.meta.env.VITE_GITHUB_URL
-        }/search/users?q=${query}&per_page=10`,
+        `${import.meta.env.GITHUB_URL}/search/users?q=${query}&per_page=10`,
         {
           apiHeaders,
         }
@@ -52,7 +50,7 @@ export const NavigationProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${import.meta.env.VITE_GITHUB_URL}/users/${login}`,
+        `${import.meta.env.GITHUB_URL}/users/${login}`,
         {
           apiHeaders,
         }
@@ -78,7 +76,7 @@ export const NavigationProvider = ({ children }) => {
       setLoading(true);
       const response = await fetch(
         `${
-          import.meta.env.VITE_GITHUB_URL
+          import.meta.env.GITHUB_URL
         }/users/${login}/repos?direction=desc&per_page=10`,
         {
           apiHeaders,
