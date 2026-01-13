@@ -12,19 +12,21 @@ export default defineConfig(
       react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
       tailwindcss(),
     ],
+    base: "/",
     server: {
       port: 3000,
       host: true,
-      sourcemap: true, // Enable source maps
+      sourcemap: true,
       fs: {
-        strict: false, // Allow reading files outside project root
+        strict: false,
       },
     },
     build: {
-      sourcemap: true, // Production source maps too
+      sourcemap: true,
+      outDir: "dist",
     },
-    clearScreen: false, // Don't clear terminal on errors
-    logLevel: "info", // More detailed console logs
+    clearScreen: false,
+    logLevel: "info",
   },
 
   reactRefresh.configs.vite
