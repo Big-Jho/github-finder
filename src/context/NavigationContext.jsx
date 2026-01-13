@@ -12,7 +12,7 @@ export const NavigationProvider = ({ children }) => {
 
   const apiHeaders = {
     headers: {
-      Authorization: `token ${import.meta.env.VITE_TOKEN}`,
+      Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
       Accept: "application/vnd.github+json",
       "User-Agent": "Big-Jho",
     },
@@ -24,7 +24,9 @@ export const NavigationProvider = ({ children }) => {
       setLoading(true);
 
       const response = await fetch(
-        `${gitUrl}/search/users?q=${query}&per_page=10`,
+        `${
+          import.meta.env.VITE_GITHUB_URL
+        }/search/users?q=${query}&per_page=10`,
         {
           apiHeaders,
         }
