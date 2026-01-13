@@ -2,8 +2,8 @@ import { createContext, useState } from "react";
 
 const NavigationContext = createContext();
 
-const gitUrl = import.meta.env.VITE_GITHUB_URL;
-const gitToken = import.meta.env.VITE_TOKEN;
+const gitUrl = ;
+const gitToken = ;
 
 export const NavigationProvider = ({ children }) => {
   // ALL STATES AND APP LEVEL FUNCTIONS
@@ -15,7 +15,7 @@ export const NavigationProvider = ({ children }) => {
 
   const apiHeaders = {
     headers: {
-      Authorization: `token ${gitToken}`,
+      Authorization: `token ${import.meta.env.VITE_TOKEN}`,
       Accept: "application/vnd.github+json",
       "User-Agent": "Big-Jho",
     },
@@ -52,7 +52,7 @@ export const NavigationProvider = ({ children }) => {
   const requestUserProfile = async (login) => {
     try {
       setLoading(true);
-      const response = await fetch(`${gitUrl}/users/${login}`, {
+      const response = await fetch(`${import.meta.env.VITE_GITHUB_URL}/users/${login}`, {
         apiHeaders,
       });
 
@@ -75,7 +75,7 @@ export const NavigationProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${gitUrl}/users/${login}/repos?direction=desc&per_page=10`,
+        `${import.meta.env.VITE_GITHUB_URL}/users/${login}/repos?direction=desc&per_page=10`,
         {
           apiHeaders,
         }
