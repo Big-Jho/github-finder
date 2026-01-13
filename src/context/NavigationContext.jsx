@@ -18,15 +18,15 @@ export const NavigationProvider = ({ children }) => {
     },
   };
 
+  const gitUrl = "https://api.github.com";
+
   // SEARCH USERS
   const searchUsers = async () => {
     try {
       setLoading(true);
 
       const response = await fetch(
-        `${
-          import.meta.env.VITE_GITHUB_URL
-        }/search/users?q=${query}&per_page=10`,
+        `${gitUrl}/search/users?q=${query}&per_page=10`,
         {
           apiHeaders,
         }
@@ -51,12 +51,9 @@ export const NavigationProvider = ({ children }) => {
   const requestUserProfile = async (login) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${import.meta.env.GITHUB_URL}/users/${login}`,
-        {
-          apiHeaders,
-        }
-      );
+      const response = await fetch(`${gitUrl}/users/${login}`, {
+        apiHeaders,
+      });
 
       if (!response.ok) {
         throw new Err(`HTTP ${response.status}: ${response.statusText}`);
@@ -77,9 +74,7 @@ export const NavigationProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${
-          import.meta.env.GITHUB_URL
-        }/users/${login}/repos?direction=desc&per_page=10`,
+        `${gitUrl}/users/${login}/repos?direction=desc&per_page=10`,
         {
           apiHeaders,
         }
