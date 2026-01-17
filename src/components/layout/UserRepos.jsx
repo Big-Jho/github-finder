@@ -10,7 +10,7 @@ import viewed from "../../assets/viewed.svg";
 
 function UserRepos({ repos }) {
   return (
-    <div className="w-full px-8 mt-20">
+    <div className="w-full mt-20">
       <h2 className="font-bold text-3xl">Latest Repositories</h2>
 
       <div className="flex flex-col  text-left gap-4 w-full my-10 mb-20">
