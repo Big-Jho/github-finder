@@ -8,7 +8,7 @@ import UserRepos from "../layout/UserRepos";
 
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-import NavigationContext from "../../context/NavigationContext";
+import NavigationContext from "../../context/github/GithubContext";
 
 import Spinner from "../layout/Spinner";
 

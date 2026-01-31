@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { NavigationProvider } from "./context/NavigationContext";
+import { GithubProvider } from "./context/github/GithubContext";
+import { AlertProvider } from "./context/alert/AlertContext";
 
 // Importing Layout
 import Navbar from "./components/layout/Navbar";
@@ -14,23 +15,25 @@ import NotFound from "./components/pages/NotFound";
 
 function App() {
   return (
-    <NavigationProvider>
-      <BrowserRouter>
-        <div className="flex flex-col justify-between min-h-screen">
-          <Navbar />
+    <GithubProvider>
+      <AlertProvider>
+        <BrowserRouter>
+          <div className="flex flex-col justify-between min-h-screen">
+            <Navbar />
 
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/about" element={<About />} />
-            <Route exact path="/contact" element={<Contact />} />
-            <Route exact path="/users/:login" element={<User />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/users/:login" element={<User />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
 
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </NavigationProvider>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </AlertProvider>
+    </GithubProvider>
   );
 }
 

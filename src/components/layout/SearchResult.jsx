@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import NavigationContext from "../../context/NavigationContext";
+import NavigationContext from "../../context/github/GithubContext";
 import { Link } from "react-router-dom";
 
 import Spinner from "./Spinner";

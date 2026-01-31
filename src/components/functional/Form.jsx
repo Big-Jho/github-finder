@@ -1,13 +1,18 @@
 import React, { useState, useContext } from "react";
-import NavigationContext from "../../context/NavigationContext";
+import GithubContext from "../../context/github/GithubContext";
+import AlertContext from "../../context/alert/AlertContext";
+import Alert from "../layout/Alert";
 
 function Form() {
   const { searchUsers, query, setQuery, clearUsers, users } =
-    useContext(NavigationContext);
+    useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
 
   const processQuery = (e) => {
     e.preventDefault();
-    if (e.target.value === "" || e.target.value === null) {
+
+    if (query === "" || query === null) {
+      setAlert("Input a search parameter", "error");
       return;
     }
 
@@ -16,6 +21,7 @@ function Form() {
 
   return (
     <form className="w-full" onSubmit={processQuery}>
+      <Alert />
       <div className={`flex flex-row justify-start items-center gap-3`}>
         <input
           type="text"
