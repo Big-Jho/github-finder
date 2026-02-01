@@ -47,7 +47,7 @@ function User() {
         )}
 
         {/* Repos */}
-        {!loading && <UserRepos repos={userRepos} />}
+        {!loading && <UserRepos repos={userRepos} login={login} />}
       </Container>
     </div>
   );

@@ -1,17 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import { FaLink } from "react-icons/fa6";
 import Tag from "../shared/Tag";
+import RepoSearchForm from "../functional/RepoSearchForm";
 
 import fork from "../../assets/fork.svg";
 import star from "../../assets/star.svg";
 import info from "../../assets/info.svg";
 import viewed from "../../assets/viewed.svg";
 
-function UserRepos({ repos }) {
+function UserRepos({ repos, login }) {
   return (
     <div className="w-full mt-20">
-      <h2 className="font-bold text-3xl">Latest Repositories</h2>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-y-4">
+        <h2 className="font-bold text-3xl">Latest Repositories</h2>
+        <RepoSearchForm login={login} />
+      </div>
 
       <div className="flex flex-col  text-left gap-4 w-full my-10 mb-20">
         {repos.map((repo) => (

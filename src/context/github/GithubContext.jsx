@@ -9,6 +9,7 @@ export const GithubProvider = ({ children }) => {
     loading: false,
     users: [],
     query: "",
+    repoQuery: "",
     userProfile: {},
     userRepos: [],
   };
@@ -38,6 +39,14 @@ export const GithubProvider = ({ children }) => {
   const setQuery = (query) => {
     dispatch({
       type: "SET_QUERY",
+      payload: query,
+    });
+  };
+
+  // SET REPO_SEARCH QUERY PARAM
+  const setRepoQuery = (query) => {
+    dispatch({
+      type: "SET_REPO_QUERY",
       payload: query,
     });
   };
@@ -96,7 +105,7 @@ export const GithubProvider = ({ children }) => {
   // REQUEST USER REPOSITORIES
   const requestUserRepos = async (login) => {
     try {
-      setLoading();
+      // setLoading();
       const response = await fetch(
         `https://api.github.com/users/${login}/repos?direction=desc&per_page=10`,
         {
@@ -116,6 +125,29 @@ export const GithubProvider = ({ children }) => {
     }
   };
 
+  // SEARCH USER REPOSITORIES
+  const searchRepos = async (login) => {
+    try {
+      // setLoading();
+      const response = await fetch(
+        `https://api.github.com/search/repositories?q=${state.repoQuery}+user:${login}`,
+        {
+          apiHeaders,
+        },
+      );
+
+      if (!response.ok) {
+        throw new Err(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      dispatch({ type: "GET_USER_REPO", payload: data.items });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   // CLEAR USERS RESULTS
   const clearUsers = () => {
     dispatch({
@@ -130,13 +162,16 @@ export const GithubProvider = ({ children }) => {
         loading: state.loading,
         users: state.users,
         query: state.query,
+        repoQuery: state.repoQuery,
         userProfile: state.userProfile,
         userRepos: state.userRepos,
         setQuery,
+        setRepoQuery,
         clearUsers,
         searchUsers,
         requestUserProfile,
         requestUserRepos,
+        searchRepos,
       }}
     >
       {children}

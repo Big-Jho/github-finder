@@ -21,6 +21,12 @@ const githubReducer = (state, action) => {
         query: action.payload,
       };
 
+    case "SET_REPO_QUERY":
+      return {
+        ...state,
+        repoQuery: action.payload,
+      };
+
     case "GET_USER_REPO":
       return {
         ...state,
