@@ -8,6 +8,8 @@ export const GithubProvider = ({ children }) => {
   const initialState = {
     loading: false,
     users: [],
+    userPagination: 1,
+    repoLimit: 10,
     query: "",
     repoQuery: "",
     userProfile: {},
@@ -35,6 +37,29 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
+  // SET USER PAGINATION FUNCTION
+  const setUserPagination = (type) => {
+    if (type === "increase") {
+      dispatch({
+        type: "SET_USER_PAGINATION",
+        payload: state.userPagination + 1,
+      });
+    } else if (type === "decrease") {
+      dispatch({
+        type: "SET_USER_PAGINATION",
+        payload: state.userPagination - 1 <= 0 ? 1 : state.userPagination - 1,
+      });
+    }
+  };
+
+  // SET REPO LIMIT FUNCTION
+  const increaseRepoLimit = () => {
+    dispatch({
+      type: "INCREASE_REPO_LIMIT",
+      payload: state.repoLimit + 10,
+    });
+  };
+
   // SET SEARCH QUERY PARAM
   const setQuery = (query) => {
     dispatch({
@@ -57,7 +82,7 @@ export const GithubProvider = ({ children }) => {
       setLoading();
 
       const response = await fetch(
-        `https://api.github.com/search/users?q=${state.query}&per_page=10`,
+        `https://api.github.com/search/users?q=${state.query}&page=${state.userPagination}&per_page=12`,
         {
           apiHeaders,
         },
@@ -107,7 +132,7 @@ export const GithubProvider = ({ children }) => {
     try {
       // setLoading();
       const response = await fetch(
-        `https://api.github.com/users/${login}/repos?direction=desc&per_page=10`,
+        `https://api.github.com/users/${login}/repos?direction=desc&page=${state.repoPagination}&per_page=${state.repoLimit}`,
         {
           apiHeaders,
         },
@@ -165,6 +190,8 @@ export const GithubProvider = ({ children }) => {
         repoQuery: state.repoQuery,
         userProfile: state.userProfile,
         userRepos: state.userRepos,
+        userPagination: state.userPagination,
+        repoLimit: state.repoLimit,
         setQuery,
         setRepoQuery,
         clearUsers,
@@ -172,6 +199,8 @@ export const GithubProvider = ({ children }) => {
         requestUserProfile,
         requestUserRepos,
         searchRepos,
+        setUserPagination,
+        increaseRepoLimit,
       }}
     >
       {children}

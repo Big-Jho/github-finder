@@ -5,6 +5,12 @@ const githubReducer = (state, action) => {
     case "SET_LOADING":
       return { ...state, loading: true };
 
+    case "SET_USER_PAGINATION":
+      return { ...state, userPagination: action.payload };
+
+    case "INCREASE_REPO_LIMIT":
+      return { ...state, repoLimit: action.payload };
+
     case "SEARCH_USERS":
       return { ...state, users: action.payload, loading: false };
 

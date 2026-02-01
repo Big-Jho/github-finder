@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { FaLink } from "react-icons/fa6";
 import Tag from "../shared/Tag";
 import RepoSearchForm from "../functional/RepoSearchForm";
+import GithubContext from "../../context/github/GithubContext";
 
 import fork from "../../assets/fork.svg";
 import star from "../../assets/star.svg";
@@ -8,6 +10,15 @@ import info from "../../assets/info.svg";
 import viewed from "../../assets/viewed.svg";
 
 function UserRepos({ repos, login }) {
+  const { increaseRepoLimit, repoLimit, requestUserRepos } =
+    useContext(GithubContext);
+
+  const moreRepo = () => {
+    increaseRepoLimit();
+    requestUserRepos(login);
+    // console.log(repoLimit);
+  };
+
   return (
     <div className="w-full mt-20">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-y-4">
@@ -15,7 +26,7 @@ function UserRepos({ repos, login }) {
         <RepoSearchForm login={login} />
       </div>
 
-      <div className="flex flex-col  text-left gap-4 w-full my-10 mb-20">
+      <div className="flex flex-col  text-left gap-4 w-full my-10 mb-4">
         {repos.map((repo) => (
           <div
             className="bg-black/20 p-4 rounded-md space-y-4 hover:bg-black/40"
@@ -56,6 +67,13 @@ function UserRepos({ repos, login }) {
           </div>
         ))}
       </div>
+
+      <button
+        className="ml-4 text-white font-semibold mb-20 bg-secondary rounded-md px-4 py-3"
+        onClick={moreRepo}
+      >
+        More Repositories
+      </button>
     </div>
   );
 }
